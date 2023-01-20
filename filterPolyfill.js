@@ -1,18 +1,22 @@
 let testArray = [1, 2, 3, 4, 5, 6, 99, , , 31, 33, 12, , , , 15]
 
-Array.prototype.filter2 = function (callback) {
+Array.prototype.filter2 = function (callback, thisArg) {
     if (this == null) {
         throw new Error('Cant be null or undefined')
     }
 
-    const arr = this
     let result = []
+    let context = this
+
+    if(arguments.length > 1) {
+        context = thisArg
+    }
 
 
-    for (let i = 0; i <= arr.length; i++) {
-        if (arr[i]) {
-            if (callback(arr[i], i, arr)) {
-                result.push(arr[i])
+    for (let i = 0; i <= this.length; i++) {
+        if (this[i]) {
+            if (callback.call(context, this[i], i, this)) {
+                result.push(this[i])
             }
 
         }
